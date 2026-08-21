@@ -27,12 +27,41 @@ const services = [
   { group: "Spa", items: [["Расслабляющий spa-уход", "от 2800 сом", "70 мин", "Тихий ритуал восстановления с ароматерапией и мягкими техниками."]] },
 ];
 
+const serviceVisuals = {
+  "Волосы": "https://images.squarespace-cdn.com/content/v1/68d41d633f1b562e8c5595f9/775ca356-932c-4def-946c-4d18c2d40e61/32.jpg",
+  "Ногти": "https://img.magnific.com/fotos-premium/elegante-manicure-de-nu-com-unhas-de-amendoa-mestre-aplicando-esmalte-de-gel-bege-no-salao-de-beleza-closeup_125374-5828.jpg?q=80&semt=ais_hybrid&w=740",
+  "Брови и ресницы": "https://images.squarespace-cdn.com/content/v1/622556d1cddb7f6ae688d0d7/f6b77e00-238e-4f3d-9a84-36318c37a800/IMG_8654.jpg",
+  "Макияж": "https://static.tildacdn.com/tild3238-6665-4662-a364-666664346437/IMG_5567.JPG",
+  "Косметология": "https://radyinterior.ae/wp-content/uploads/2025/02/Luxury-Beauty-Salon-1024x768.webp",
+  "Spa": "https://moneystory-phinf.pstatic.net/MjAyNjA0MDFfMTgg/MDAxNzc1MDMwNjQ5ODg2.jMFeGKCwFKKhH5O88VjFOvsXCrvYZJ3f1rGUz162TKgg.8lfB5hAtllYhhsgnQ61aegaUx1bbC75am43Sl81qQJog.PNG/KakaoTalk_20260401_170322209.png",
+};
+
+const popularServices = new Set(["Окрашивание", "Маникюр с покрытием", "Коррекция и окрашивание бровей", "Spa-ритуал для лица"]);
+
 const masters = [
   ["Алина Садыкова", "Топ-стилист, колорист", "9 лет", "Сложные окрашивания, стрижки и восстановление структуры волос.", "https://images.squarespace-cdn.com/content/v1/68d41d633f1b562e8c5595f9/775ca356-932c-4def-946c-4d18c2d40e61/32.jpg"],
   ["Мээрим Абдыева", "Nail-мастер", "7 лет", "Чистый маникюр, нюдовые покрытия и деликатная работа с формой.", "https://img.magnific.com/fotos-premium/elegante-manicure-de-nu-com-unhas-de-amendoa-mestre-aplicando-esmalte-de-gel-bege-no-salao-de-beleza-closeup_125374-5828.jpg?q=80&semt=ais_hybrid&w=740"],
   ["Диана Осмонова", "Бровист, lash-мастер", "6 лет", "Естественная коррекция, ламинирование и выразительный взгляд без жесткости.", "https://static.tildacdn.com/tild3238-6665-4662-a364-666664346437/IMG_5567.JPG"],
   ["Айсулуу Темирова", "Визажист", "8 лет", "Свадебные и вечерние образы с акцентом на кожу и стойкость.", "https://images.squarespace-cdn.com/content/v1/622556d1cddb7f6ae688d0d7/f6b77e00-238e-4f3d-9a84-36318c37a800/IMG_8654.jpg"],
   ["Жанара Ибраева", "Косметолог-эстетист", "10 лет", "Уходовые процедуры, массаж лица и индивидуальные протоколы кожи.", "https://radyinterior.ae/wp-content/uploads/2025/02/Luxury-Beauty-Salon-1024x768.webp"],
+];
+
+const beforeAfter = [
+  {
+    title: "Окрашивание волос",
+    before: "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTAxL3Jhd3BpeGVsX29mZmljZV80MF9waG90b19vZl9hX2JsYWNrX2FmcmljYWNfYW1lcmljY25fd29tYW5zX2hhbl80MGQwYTBiYS05MDk2LTQ4MjEtYmU5YS04NzYzYTRkYWY2M2JfMS5qcGc.jpg",
+    after: "https://images.squarespace-cdn.com/content/v1/68d41d633f1b562e8c5595f9/775ca356-932c-4def-946c-4d18c2d40e61/32.jpg",
+  },
+  {
+    title: "Брови и макияж",
+    before: "https://images.squarespace-cdn.com/content/v1/622556d1cddb7f6ae688d0d7/f6b77e00-238e-4f3d-9a84-36318c37a800/IMG_8654.jpg",
+    after: "https://static.tildacdn.com/tild3238-6665-4662-a364-666664346437/IMG_5567.JPG",
+  },
+  {
+    title: "Маникюр",
+    before: "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTAxL3Jhd3BpeGVsX29mZmljZV80MF9waG90b19vZl9hX2JsYWNrX2FmcmljYWNfYW1lcmljY25fd29tYW5zX2hhbl80MGQwYTBiYS05MDk2LTQ4MjEtYmU5YS04NzYzYTRkYWY2M2JfMS5qcGc.jpg",
+    after: "https://img.magnific.com/fotos-premium/elegante-manicure-de-nu-com-unhas-de-amendoa-mestre-aplicando-esmalte-de-gel-bege-no-salao-de-beleza-closeup_125374-5828.jpg?q=80&semt=ais_hybrid&w=740",
+  },
 ];
 
 const gallery = [
@@ -57,6 +86,7 @@ const timeSlots = ["10:00", "11:30", "13:00", "15:00", "17:30", "19:00"];
 const bookingServices = services.flatMap((section) => section.items.map((item) => item[0]));
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isTouchDevice = window.matchMedia("(hover: none)").matches;
+let activeServiceCategory = "Все";
 
 function createElement(tag, className, text) {
   const element = document.createElement(tag);
@@ -65,19 +95,44 @@ function createElement(tag, className, text) {
   return element;
 }
 
+function renderServiceTabs() {
+  const root = document.querySelector("#serviceTabs");
+  root.innerHTML = "";
+  ["Все", ...services.map((section) => section.group)].forEach((category) => {
+    const button = createElement("button", category === activeServiceCategory ? "active" : "", category);
+    button.type = "button";
+    button.setAttribute("role", "tab");
+    button.setAttribute("aria-selected", category === activeServiceCategory ? "true" : "false");
+    button.addEventListener("click", () => {
+      activeServiceCategory = category;
+      renderServiceTabs();
+      renderServices();
+    });
+    root.append(button);
+  });
+}
+
 function renderServices() {
   const root = document.querySelector("#serviceGroups");
-  services.forEach((section) => {
+  root.innerHTML = "";
+  services.filter((section) => activeServiceCategory === "Все" || section.group === activeServiceCategory).forEach((section) => {
     const card = createElement("article", "service-card stagger-item");
-    card.append(createElement("h3", "", section.group));
+    const img = createElement("img", "service-image image-fade");
+    img.src = serviceVisuals[section.group];
+    img.alt = section.group;
+    img.loading = "lazy";
+    card.append(img, createElement("h3", "", section.group));
 
     section.items.forEach(([name, price, duration, text]) => {
       const row = createElement("div", "service-row");
       const content = createElement("div");
-      content.append(createElement("h4", "", name), createElement("p", "", text), createElement("span", "", duration));
+      const title = createElement("h4", "", name);
+      if (popularServices.has(name)) title.append(createElement("em", "popular-badge", "Популярно"));
+      content.append(title, createElement("p", "", text), createElement("span", "", duration));
       const priceBlock = createElement("div", "price-block");
       const cta = createElement("a", "", "Записаться");
       cta.href = "#booking";
+      cta.addEventListener("click", () => setBookingService(name));
       priceBlock.append(createElement("strong", "", price), cta);
       row.append(content, priceBlock);
       card.append(row);
@@ -85,22 +140,30 @@ function renderServices() {
 
     root.append(card);
   });
+  observeAnimatedElements(root.querySelectorAll(".stagger-item"));
+  initImageLoading(root);
 }
 
 function renderMasters() {
   const root = document.querySelector("#masterGrid");
-  masters.forEach(([name, role, exp, text, image]) => {
+  masters.forEach(([name, role, exp, text, image], index) => {
     const card = createElement("article", "master-card stagger-item");
     const img = createElement("img");
     img.src = image;
     img.alt = name;
+    img.loading = "lazy";
     const body = createElement("div");
-    const link = createElement("a", "", "Записаться к мастеру");
+    const details = createElement("button", "master-details", "Подробнее");
+    details.type = "button";
+    details.addEventListener("click", () => openMasterModal(index));
+    const link = createElement("a", "", "Записаться");
     link.href = "#booking";
-    body.append(createElement("h3", "", name), createElement("p", "", role), createElement("span", "", `${exp} опыта`), createElement("small", "", text), link);
+    link.addEventListener("click", () => setBookingMaster(name));
+    body.append(createElement("h3", "", name), createElement("p", "", role), createElement("span", "", `${exp} опыта`), createElement("small", "", text), details, link);
     card.append(img, body);
     root.append(card);
   });
+  initImageLoading(root);
 }
 
 function renderGallery(category = "Все") {
@@ -113,10 +176,41 @@ function renderGallery(category = "Все") {
       const img = createElement("img");
       img.src = image;
       img.alt = title;
+      img.loading = "lazy";
       figure.append(img, createElement("figcaption", "", title));
       root.append(figure);
     });
   observeAnimatedElements(root.querySelectorAll(".stagger-item"));
+  initImageLoading(root);
+}
+
+function renderBeforeAfter() {
+  const root = document.querySelector("#beforeAfterGrid");
+  beforeAfter.forEach((item) => {
+    const card = createElement("article", "before-after-card stagger-item");
+    card.style.setProperty("--split", "50%");
+    card.innerHTML = `
+      <div class="compare-frame">
+        <img class="compare-img image-fade" src="${item.before}" alt="${item.title} до" loading="lazy">
+        <div class="compare-after">
+          <img class="compare-img image-fade" src="${item.after}" alt="${item.title} после" loading="lazy">
+        </div>
+        <span class="compare-label before">До</span>
+        <span class="compare-label after">После</span>
+      </div>
+      <div class="compare-copy">
+        <h3>${item.title}</h3>
+        <p>Передвиньте ползунок, чтобы увидеть разницу.</p>
+        <input type="range" min="18" max="82" value="50" aria-label="Сравнить до и после">
+      </div>
+    `;
+    card.querySelector("input").addEventListener("input", (event) => {
+      card.style.setProperty("--split", `${event.target.value}%`);
+    });
+    root.append(card);
+  });
+  observeAnimatedElements(root.querySelectorAll(".stagger-item"));
+  initImageLoading(root);
 }
 
 function renderFilters() {
@@ -167,10 +261,93 @@ function initBooking() {
     const master = document.querySelector("#bookingMaster").value;
     const date = document.querySelector("#bookingDate").value || "удобную дату";
     const time = document.querySelector("#bookingTime").value;
+    const name = document.querySelector("#bookingName").value || "Гостья";
+    const phone = document.querySelector("#bookingPhone").value || "не указан";
     const note = document.querySelector("#formNote");
+    const message = [
+      "Здравствуйте! Хочу записаться в LUMIÈRE Beauty Atelier.",
+      `Услуга: ${service}`,
+      `Мастер: ${master}`,
+      `Дата: ${date}`,
+      `Время: ${time}`,
+      `Имя: ${name}`,
+      `Телефон: ${phone}`,
+    ].join("\n");
+    const whatsappUrl = `https://wa.me/996555123456?text=${encodeURIComponent(message)}`;
     note.classList.remove("is-active");
-    note.textContent = `Заявка подготовлена: ${service}, ${master}, ${date}, ${time}. В реальном проекте форма будет отправлять данные администратору.`;
+    note.innerHTML = `Заявка готова: ${service}, ${master}, ${date}, ${time}. <a href="${whatsappUrl}" target="_blank" rel="noopener">Отправить в WhatsApp</a>`;
     requestAnimationFrame(() => note.classList.add("is-active"));
+    window.open(whatsappUrl, "_blank", "noopener");
+  });
+}
+
+function setBookingService(service) {
+  const select = document.querySelector("#bookingService");
+  select.value = service;
+}
+
+function setBookingMaster(master) {
+  const select = document.querySelector("#bookingMaster");
+  select.value = master;
+}
+
+function openMasterModal(index) {
+  const [name, role, exp, text, image] = masters[index];
+  const modal = document.querySelector("#masterModal");
+  const content = document.querySelector("#modalContent");
+  content.innerHTML = `
+    <img src="${image}" alt="${name}" loading="lazy">
+    <div>
+      <p class="eyebrow">${role}</p>
+      <h2>${name}</h2>
+      <p>${text}</p>
+      <ul>
+        <li>${exp} опыта</li>
+        <li>Консультация перед услугой</li>
+        <li>Фото результата после визита</li>
+      </ul>
+      <a class="primary-btn" href="#booking">Записаться к мастеру</a>
+    </div>
+  `;
+  content.querySelector("a").addEventListener("click", () => {
+    setBookingMaster(name);
+    modal.close();
+  });
+  modal.showModal();
+}
+
+function initMasterModal() {
+  const modal = document.querySelector("#masterModal");
+  document.querySelector(".modal-close").addEventListener("click", () => modal.close());
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) modal.close();
+  });
+}
+
+function initMobileMenu() {
+  const menu = document.querySelector("#mobileMenu");
+  const toggle = document.querySelector(".menu-toggle");
+  const close = document.querySelector(".menu-close");
+  const links = menu.querySelectorAll("a");
+  const setOpen = (open) => {
+    document.body.classList.toggle("menu-open", open);
+    menu.setAttribute("aria-hidden", open ? "false" : "true");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  };
+
+  toggle.addEventListener("click", () => setOpen(true));
+  close.addEventListener("click", () => setOpen(false));
+  links.forEach((link) => link.addEventListener("click", () => setOpen(false)));
+  menu.addEventListener("click", (event) => {
+    if (event.target === menu) setOpen(false);
+  });
+}
+
+function initImageLoading(root = document) {
+  root.querySelectorAll("img").forEach((image) => {
+    image.classList.add("image-fade");
+    if (image.complete) image.classList.add("is-loaded");
+    image.addEventListener("load", () => image.classList.add("is-loaded"), { once: true });
   });
 }
 
@@ -276,13 +453,18 @@ function initBrandPulse() {
   });
 }
 
+renderServiceTabs();
 renderServices();
 renderMasters();
 renderFilters();
 renderGallery();
+renderBeforeAfter();
 renderReviews();
 initBooking();
+initMasterModal();
+initMobileMenu();
 initBrandPulse();
+initImageLoading();
 observeAnimatedElements();
 initHeaderAndParallax();
 initMagneticButtons();

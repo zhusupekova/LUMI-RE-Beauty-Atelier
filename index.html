@@ -11,6 +11,30 @@
     <meta property="og:type" content="website" />
     <meta property="og:image" content="assets/og.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BeautySalon",
+        "name": "LUMIÈRE Beauty Atelier",
+        "description": "Премиальный салон красоты в Бишкеке: стрижки, окрашивание, маникюр, брови, макияж, косметология и spa-уходы.",
+        "image": "https://zhusupekova.github.io/LUMI-RE-Beauty-Atelier/assets/og.png",
+        "telephone": "+996555123456",
+        "priceRange": "от 1200 сом",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "ул. Киевская, 95",
+          "addressLocality": "Бишкек",
+          "addressCountry": "KG"
+        },
+        "openingHoursSpecification": [{
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "10:00",
+          "closes": "21:00"
+        }],
+        "url": "https://zhusupekova.github.io/LUMI-RE-Beauty-Atelier/"
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -34,7 +58,28 @@
         <a href="#contacts">Контакты</a>
       </nav>
       <a class="header-book" href="#booking">Записаться</a>
+      <button class="menu-toggle" type="button" aria-label="Открыть меню" aria-controls="mobileMenu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
     </header>
+    <aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <div class="mobile-menu-panel">
+        <div class="mobile-menu-head">
+          <strong>LUMIÈRE</strong>
+          <button type="button" class="menu-close" aria-label="Закрыть меню">×</button>
+        </div>
+        <nav aria-label="Мобильная навигация">
+          <a href="#home">Главная</a>
+          <a href="#services">Услуги и цены</a>
+          <a href="#beforeAfter">До/после</a>
+          <a href="#masters">Мастера</a>
+          <a href="#gallery">Галерея</a>
+          <a href="#reviews">Отзывы</a>
+          <a href="#contacts">Контакты</a>
+        </nav>
+        <a class="primary-btn mobile-menu-cta" href="#booking">Записаться онлайн</a>
+      </div>
+    </aside>
 
     <main>
       <section class="hero" id="home">
@@ -70,6 +115,7 @@
           <h2>Популярные услуги</h2>
           <p>Понятный прайс на окрашивание волос Бишкек, маникюр Бишкек, брови Бишкек, макияж Бишкек, уход за волосами Бишкек и косметология Бишкек.</p>
         </div>
+        <div class="service-tabs" id="serviceTabs" role="tablist" aria-label="Категории услуг"></div>
         <div class="service-groups" id="serviceGroups"></div>
       </section>
 
@@ -95,6 +141,15 @@
         <div class="gallery-grid" id="galleryGrid"></div>
       </section>
 
+      <section class="section before-after reveal" id="beforeAfter">
+        <div class="section-head reveal">
+          <p class="eyebrow">До и после</p>
+          <h2>Визуальный результат, который легко показать клиенту</h2>
+          <p>Для демонстрации добавлены интерактивные before/after-сравнения. В реальном проекте сюда можно поставить работы мастеров из Instagram или фотосессии салона.</p>
+        </div>
+        <div class="before-after-grid" id="beforeAfterGrid"></div>
+      </section>
+
       <section class="section masters reveal" id="masters">
         <div class="section-head reveal">
           <p class="eyebrow">Мастера</p>
@@ -107,6 +162,25 @@
         <p class="eyebrow">Косметика</p>
         <div class="brand-strip">
           <span>Davines</span><span>Kérastase</span><span>Olaplex</span><span>OPI</span><span>Luxio</span><span>Comfort Zone</span><span>DMK</span>
+        </div>
+      </section>
+
+      <section class="section trust reveal">
+        <div class="section-head reveal">
+          <p class="eyebrow">Доверие</p>
+          <h2>Почему гостья спокойно записывается с телефона</h2>
+        </div>
+        <div class="trust-grid">
+          <article><strong>100%</strong><span>стерильная обработка инструментов</span></article>
+          <article><strong>15 мин</strong><span>консультация перед сложной услугой</span></article>
+          <article><strong>4.9</strong><span>средняя оценка по отзывам клиенток</span></article>
+          <article><strong>8+</strong><span>профессиональных beauty-направлений</span></article>
+        </div>
+        <div class="certificate-strip">
+          <span>Сертификаты мастеров</span>
+          <span>Профессиональные составы</span>
+          <span>Фото результата после услуги</span>
+          <span>Напоминание о записи в WhatsApp</span>
         </div>
       </section>
 
@@ -178,6 +252,16 @@
       <span>Премиальный салон красоты в Бишкеке</span>
       <a href="#booking">Записаться онлайн</a>
     </footer>
+
+    <div class="mobile-sticky-cta" aria-label="Быстрые действия">
+      <a href="https://wa.me/996555123456" class="sticky-whatsapp">WhatsApp</a>
+      <a href="#booking" class="sticky-book">Записаться</a>
+    </div>
+
+    <dialog class="master-modal" id="masterModal">
+      <button class="modal-close" type="button" aria-label="Закрыть">×</button>
+      <div class="modal-content" id="modalContent"></div>
+    </dialog>
 
     <script src="script.js"></script>
   </body>

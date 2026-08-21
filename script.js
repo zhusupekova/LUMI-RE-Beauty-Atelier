@@ -56,6 +56,7 @@ const reviews = [
 const timeSlots = ["10:00", "11:30", "13:00", "15:00", "17:30", "19:00"];
 const bookingServices = services.flatMap((section) => section.items.map((item) => item[0]));
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isTouchDevice = window.matchMedia("(hover: none)").matches;
 
 function createElement(tag, className, text) {
   const element = document.createElement(tag);
@@ -205,10 +206,12 @@ function initHeaderAndParallax() {
     const scrollY = window.scrollY;
     header.classList.toggle("is-scrolled", scrollY > 18);
 
-    if (!reducedMotion && window.innerWidth > 720) {
+    if (!reducedMotion) {
       media.forEach((item) => {
         const speed = Number(item.dataset.parallax || 0.08);
-        item.style.transform = `translate3d(0, ${scrollY * speed}px, 0) scale(${item.classList.contains("hero-image") ? 1.03 : 1.02})`;
+        const mobileFactor = window.innerWidth <= 720 ? 0.34 : 1;
+        const scale = item.classList.contains("hero-image") ? (window.innerWidth <= 720 ? 1.015 : 1.03) : 1.02;
+        item.style.transform = `translate3d(0, ${scrollY * speed * mobileFactor}px, 0) scale(${scale})`;
       });
     }
 
@@ -225,7 +228,7 @@ function initHeaderAndParallax() {
 }
 
 function initMagneticButtons() {
-  if (reducedMotion || window.matchMedia("(hover: none)").matches) return;
+  if (reducedMotion || isTouchDevice) return;
 
   document.querySelectorAll(".primary-btn, .secondary-btn, .header-book, .price-block a, .master-card a, .booking-form button").forEach((button) => {
     button.addEventListener("mousemove", (event) => {
@@ -241,9 +244,22 @@ function initMagneticButtons() {
   });
 }
 
+function initTouchPulse() {
+  if (reducedMotion || !isTouchDevice) return;
+
+  document.querySelectorAll(".primary-btn, .secondary-btn, .header-book, .price-block a, .master-card a, .filters button, .booking-form button").forEach((item) => {
+    item.addEventListener("touchstart", () => {
+      item.classList.remove("touch-pulse");
+      requestAnimationFrame(() => item.classList.add("touch-pulse"));
+    }, { passive: true });
+
+    item.addEventListener("animationend", () => item.classList.remove("touch-pulse"));
+  });
+}
+
 function initPointerGlow() {
   const glow = document.querySelector(".cursor-glow");
-  if (!glow || reducedMotion || window.matchMedia("(hover: none)").matches) return;
+  if (!glow || reducedMotion || isTouchDevice) return;
 
   window.addEventListener("pointermove", (event) => {
     glow.classList.add("is-visible");
@@ -270,6 +286,7 @@ initBrandPulse();
 observeAnimatedElements();
 initHeaderAndParallax();
 initMagneticButtons();
+initTouchPulse();
 initPointerGlow();
 
 requestAnimationFrame(() => {

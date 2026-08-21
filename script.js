@@ -55,6 +55,7 @@ const reviews = [
 
 const timeSlots = ["10:00", "11:30", "13:00", "15:00", "17:30", "19:00"];
 const bookingServices = services.flatMap((section) => section.items.map((item) => item[0]));
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function createElement(tag, className, text) {
   const element = document.createElement(tag);
@@ -66,7 +67,7 @@ function createElement(tag, className, text) {
 function renderServices() {
   const root = document.querySelector("#serviceGroups");
   services.forEach((section) => {
-    const card = createElement("article", "service-card");
+    const card = createElement("article", "service-card stagger-item");
     card.append(createElement("h3", "", section.group));
 
     section.items.forEach(([name, price, duration, text]) => {
@@ -88,7 +89,7 @@ function renderServices() {
 function renderMasters() {
   const root = document.querySelector("#masterGrid");
   masters.forEach(([name, role, exp, text, image]) => {
-    const card = createElement("article", "master-card");
+    const card = createElement("article", "master-card stagger-item");
     const img = createElement("img");
     img.src = image;
     img.alt = name;
@@ -107,13 +108,14 @@ function renderGallery(category = "Все") {
   gallery
     .filter(([itemCategory]) => category === "Все" || itemCategory === category)
     .forEach(([, title, image]) => {
-      const figure = createElement("figure");
+      const figure = createElement("figure", "stagger-item");
       const img = createElement("img");
       img.src = image;
       img.alt = title;
       figure.append(img, createElement("figcaption", "", title));
       root.append(figure);
     });
+  observeAnimatedElements(root.querySelectorAll(".stagger-item"));
 }
 
 function renderFilters() {
@@ -124,7 +126,12 @@ function renderFilters() {
     button.addEventListener("click", () => {
       document.querySelectorAll(".filters button").forEach((item) => item.classList.remove("active"));
       button.classList.add("active");
-      renderGallery(category);
+      const grid = document.querySelector("#galleryGrid");
+      grid.classList.add("is-switching");
+      window.setTimeout(() => {
+        renderGallery(category);
+        requestAnimationFrame(() => grid.classList.remove("is-switching"));
+      }, reducedMotion ? 0 : 180);
     });
     root.append(button);
   });
@@ -133,7 +140,7 @@ function renderFilters() {
 function renderReviews() {
   const root = document.querySelector("#reviewGrid");
   reviews.forEach(([name, text]) => {
-    const card = createElement("article");
+    const card = createElement("article", "stagger-item");
     card.append(createElement("div", "stars", "★★★★★"), createElement("p", "", text), createElement("strong", "", `${name}, Бишкек`));
     root.append(card);
   });
@@ -159,7 +166,97 @@ function initBooking() {
     const master = document.querySelector("#bookingMaster").value;
     const date = document.querySelector("#bookingDate").value || "удобную дату";
     const time = document.querySelector("#bookingTime").value;
-    document.querySelector("#formNote").textContent = `Заявка подготовлена: ${service}, ${master}, ${date}, ${time}. В реальном проекте форма будет отправлять данные администратору.`;
+    const note = document.querySelector("#formNote");
+    note.classList.remove("is-active");
+    note.textContent = `Заявка подготовлена: ${service}, ${master}, ${date}, ${time}. В реальном проекте форма будет отправлять данные администратору.`;
+    requestAnimationFrame(() => note.classList.add("is-active"));
+  });
+}
+
+function observeAnimatedElements(elements = document.querySelectorAll(".reveal, .stagger-item")) {
+  if (reducedMotion) {
+    elements.forEach((element) => element.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries, instance) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const siblings = [...entry.target.parentElement.children].filter((item) => item.classList.contains("stagger-item"));
+        const index = Math.max(0, siblings.indexOf(entry.target));
+        entry.target.style.transitionDelay = entry.target.classList.contains("stagger-item") ? `${Math.min(index * 80, 420)}ms` : "0ms";
+        entry.target.classList.add("is-visible");
+        instance.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -12% 0px", threshold: 0.12 },
+  );
+
+  elements.forEach((element) => observer.observe(element));
+}
+
+function initHeaderAndParallax() {
+  const header = document.querySelector(".site-header");
+  const media = document.querySelectorAll(".parallax-media");
+  let ticking = false;
+
+  const update = () => {
+    const scrollY = window.scrollY;
+    header.classList.toggle("is-scrolled", scrollY > 18);
+
+    if (!reducedMotion && window.innerWidth > 720) {
+      media.forEach((item) => {
+        const speed = Number(item.dataset.parallax || 0.08);
+        item.style.transform = `translate3d(0, ${scrollY * speed}px, 0) scale(${item.classList.contains("hero-image") ? 1.03 : 1.02})`;
+      });
+    }
+
+    ticking = false;
+  };
+
+  window.addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }, { passive: true });
+
+  update();
+}
+
+function initMagneticButtons() {
+  if (reducedMotion || window.matchMedia("(hover: none)").matches) return;
+
+  document.querySelectorAll(".primary-btn, .secondary-btn, .header-book, .price-block a, .master-card a, .booking-form button").forEach((button) => {
+    button.addEventListener("mousemove", (event) => {
+      const rect = button.getBoundingClientRect();
+      const x = (event.clientX - rect.left - rect.width / 2) * 0.18;
+      const y = (event.clientY - rect.top - rect.height / 2) * 0.26;
+      button.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    });
+
+    button.addEventListener("mouseleave", () => {
+      button.style.transform = "";
+    });
+  });
+}
+
+function initPointerGlow() {
+  const glow = document.querySelector(".cursor-glow");
+  if (!glow || reducedMotion || window.matchMedia("(hover: none)").matches) return;
+
+  window.addEventListener("pointermove", (event) => {
+    glow.classList.add("is-visible");
+    glow.style.left = `${event.clientX}px`;
+    glow.style.top = `${event.clientY}px`;
+  }, { passive: true });
+
+  document.addEventListener("mouseleave", () => glow.classList.remove("is-visible"));
+}
+
+function initBrandPulse() {
+  document.querySelectorAll(".brand-strip span").forEach((item, index) => {
+    item.style.setProperty("--i", index);
   });
 }
 
@@ -169,3 +266,12 @@ renderFilters();
 renderGallery();
 renderReviews();
 initBooking();
+initBrandPulse();
+observeAnimatedElements();
+initHeaderAndParallax();
+initMagneticButtons();
+initPointerGlow();
+
+requestAnimationFrame(() => {
+  document.body.classList.add("is-loaded");
+});

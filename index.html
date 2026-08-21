@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="cursor-glow" aria-hidden="true"></div>
     <header class="site-header">
       <a class="brand" href="#home" aria-label="LUMIÈRE Beauty Atelier">
         <span>LUMIÈRE</span>
@@ -37,7 +38,7 @@
 
     <main>
       <section class="hero" id="home">
-        <img class="hero-image" src="https://moneystory-phinf.pstatic.net/MjAyNjA0MDFfMTgg/MDAxNzc1MDMwNjQ5ODg2.jMFeGKCwFKKhH5O88VjFOvsXCrvYZJ3f1rGUz162TKgg.8lfB5hAtllYhhsgnQ61aegaUx1bbC75am43Sl81qQJog.PNG/KakaoTalk_20260401_170322209.png" alt="Светлый премиальный интерьер салона красоты" />
+        <img class="hero-image parallax-media" data-parallax="0.16" src="https://moneystory-phinf.pstatic.net/MjAyNjA0MDFfMTgg/MDAxNzc1MDMwNjQ5ODg2.jMFeGKCwFKKhH5O88VjFOvsXCrvYZJ3f1rGUz162TKgg.8lfB5hAtllYhhsgnQ61aegaUx1bbC75am43Sl81qQJog.PNG/KakaoTalk_20260401_170322209.png" alt="Светлый премиальный интерьер салона красоты" />
         <div class="hero-overlay"></div>
         <div class="hero-content">
           <p class="eyebrow">LUMIÈRE Beauty Atelier</p>
@@ -55,7 +56,7 @@
         </div>
       </section>
 
-      <section class="section intro">
+      <section class="section intro reveal">
         <div>
           <p class="eyebrow">Салон красоты Бишкек</p>
           <h2>Уход, после которого спокойно смотреть в зеркало и в календарь</h2>
@@ -63,8 +64,8 @@
         <p>LUMIÈRE создан для женщин, которым важны точный результат, сильные мастера, прозрачные цены и сервис без давления. Здесь каждая услуга начинается с консультации, а запись занимает меньше минуты.</p>
       </section>
 
-      <section class="section" id="services">
-        <div class="section-head">
+      <section class="section reveal" id="services">
+        <div class="section-head reveal">
           <p class="eyebrow">Услуги и цены</p>
           <h2>Популярные услуги</h2>
           <p>Понятный прайс на окрашивание волос Бишкек, маникюр Бишкек, брови Бишкек, макияж Бишкек, уход за волосами Бишкек и косметология Бишкек.</p>
@@ -72,8 +73,8 @@
         <div class="service-groups" id="serviceGroups"></div>
       </section>
 
-      <section class="section why">
-        <div class="section-head">
+      <section class="section why reveal">
+        <div class="section-head reveal">
           <p class="eyebrow">Почему выбирают LUMIÈRE</p>
           <h2>Премиальный сервис без холодной дистанции</h2>
         </div>
@@ -85,8 +86,8 @@
         </div>
       </section>
 
-      <section class="section" id="gallery">
-        <div class="section-head">
+      <section class="section reveal" id="gallery">
+        <div class="section-head reveal">
           <p class="eyebrow">Галерея работ</p>
           <h2>Результаты и атмосфера</h2>
         </div>
@@ -94,23 +95,23 @@
         <div class="gallery-grid" id="galleryGrid"></div>
       </section>
 
-      <section class="section masters" id="masters">
-        <div class="section-head">
+      <section class="section masters reveal" id="masters">
+        <div class="section-head reveal">
           <p class="eyebrow">Мастера</p>
           <h2>Команда, которой доверяют детали</h2>
         </div>
         <div class="master-grid" id="masterGrid"></div>
       </section>
 
-      <section class="section brands">
+      <section class="section brands reveal">
         <p class="eyebrow">Косметика</p>
         <div class="brand-strip">
           <span>Davines</span><span>Kérastase</span><span>Olaplex</span><span>OPI</span><span>Luxio</span><span>Comfort Zone</span><span>DMK</span>
         </div>
       </section>
 
-      <section class="section about" id="about">
-        <img src="https://radyinterior.ae/wp-content/uploads/2025/02/Luxury-Beauty-Salon-1024x768.webp" alt="Интерьер премиального салона красоты" />
+      <section class="section about reveal" id="about">
+        <img class="parallax-media" data-parallax="0.08" src="https://radyinterior.ae/wp-content/uploads/2025/02/Luxury-Beauty-Salon-1024x768.webp" alt="Интерьер премиального салона красоты" />
         <div>
           <p class="eyebrow">О салоне</p>
           <h2>Пространство красоты в Бишкеке, где важны результат и ощущение</h2>
@@ -119,15 +120,15 @@
         </div>
       </section>
 
-      <section class="section reviews" id="reviews">
-        <div class="section-head">
+      <section class="section reviews reveal" id="reviews">
+        <div class="section-head reveal">
           <p class="eyebrow">Отзывы</p>
           <h2>Что говорят клиентки</h2>
         </div>
         <div class="review-grid" id="reviewGrid"></div>
       </section>
 
-      <section class="gift" id="gift">
+      <section class="gift reveal" id="gift">
         <div>
           <p class="eyebrow">Подарочные сертификаты</p>
           <h2>Подарите момент заботы</h2>
@@ -136,7 +137,7 @@
         <a class="primary-btn" href="#booking">Купить сертификат</a>
       </section>
 
-      <section class="section booking" id="booking">
+      <section class="section booking reveal" id="booking">
         <div>
           <p class="eyebrow">Онлайн-запись</p>
           <h2>Выберите услугу, мастера и удобное время</h2>
@@ -154,7 +155,7 @@
         </form>
       </section>
 
-      <section class="section contacts" id="contacts">
+      <section class="section contacts reveal" id="contacts">
         <div>
           <p class="eyebrow">Контакты</p>
           <h2>Ждем вас на Киевской, 95</h2>
